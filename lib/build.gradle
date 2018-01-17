@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+
+def libVersionCode = 1
+def libVersionName = '0.0.3'
+
+def sdk_version = 26;
+def appcompat_version = "$sdk_version.1.0"
+
+android {
+    compileSdkVersion sdk_version
+    buildToolsVersion "$sdk_version.0.2"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion sdk_version
+        versionCode libVersionCode
+        versionName libVersionName
+    }
+
+    dataBinding {
+        enabled = true;
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile "com.android.support:appcompat-v7:$appcompat_version"
+    compile "com.android.support:design:$appcompat_version"
+    compile "com.android.support:cardview-v7:$appcompat_version"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    compile 'jp.wasabeef:glide-transformations:2.0.1'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    compile 'com.google.code.gson:gson:2.7'
+
+    compile 'com.android.volley:volley:1.0.0'
+}

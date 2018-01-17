@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="transparent">@android:color/transparent</color>
+
+    <color name="swipe_color">#FF757575</color>
+    <color name="swipe_active_color">#FFAA2575</color>
+
+</resources>

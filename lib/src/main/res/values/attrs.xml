@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="RoundedImageView">
+        <attr name="radius" format="dimension"/>
+        <attr name="android:scaleType"/>
+    </declare-styleable>
+
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="pstsIndicatorColor" format="color"/>
+        <attr name="pstsUnderlineColor" format="color"/>
+        <attr name="pstsDividerColor" format="color"/>
+        <attr name="pstsIndicatorHeight" format="dimension"/>
+        <attr name="pstsUnderlineHeight" format="dimension"/>
+        <attr name="pstsDividerPadding" format="dimension"/>
+        <attr name="pstsTabPaddingLeftRight" format="dimension"/>
+        <attr name="pstsScrollOffset" format="dimension"/>
+        <attr name="pstsTabBackground" format="reference"/>
+        <attr name="pstsShouldExpand" format="boolean"/>
+        <attr name="pstsTextAllCaps" format="boolean"/>
+        <attr name="pstsDotIndicator" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="ScrimInsetsView">
+        <attr name="insetFore" format="reference|color"/>
+    </declare-styleable>
+
+    <declare-styleable name="ImageGlideView">
+        <attr name="placeholder" format="reference"/>
+        <attr name="placeholder_err" format="reference"/>
+        <attr name="cache" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="MandatoryLinearLayout">
+        <attr name="backgroundNormal" format="reference"/>
+        <attr name="backgroundRequired" format="reference"/>
+        <attr name="regex" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="InternalWebView">
+        <attr name="fontSize" format="reference"/>
+        <attr name="js_enable" format="boolean"/>
+        <attr name="cookies_enable" format="boolean"/>
+        <attr name="cache_enable" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="BaseListView">
+        <attr name="spacing" format="dimension"/>
+        <attr name="includeEdge" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="BaseGridView" parent="BaseListView">
+        <attr name="spacing"/>
+        <attr name="includeEdge"/>
+        <attr name="spanCount" format="integer"/>
+        <attr name="includeTopEdge" format="boolean"/>
+    </declare-styleable>
+
+</resources>

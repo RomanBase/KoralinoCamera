@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="4dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="8dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:orientation="horizontal">
+
+            <libs.view.PagerSlidingTabStrip
+                android:id="@+id/tabs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:pstsDividerColor="@color/transparent"
+                app:pstsIndicatorColor="@color/swipe_active_color"
+                app:pstsIndicatorHeight="@dimen/swipe_dot_size"
+                app:pstsShouldExpand="false"
+                app:pstsTabPaddingLeftRight="4dp"
+                app:pstsDotIndicator="true"
+                app:pstsUnderlineColor="@color/swipe_color"
+                app:pstsUnderlineHeight="@dimen/swipe_dot_size" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+</layout>
