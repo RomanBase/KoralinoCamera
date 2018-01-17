@@ -13,10 +13,13 @@ import com.ankhrom.koralino.camera.viewmodel.CameraViewModel;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
+    public static MainActivity ref;
+
     @Override
     protected boolean onPreInit() {
 
         Base.debug = true;
+        ref = this;
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 

@@ -43,6 +43,7 @@ public class CameraHolder {
 
     public Size previewSize;
     public Size outputSize;
+    public int orientation;
 
     public CameraHolder(@NonNull Context context) {
         this.context = context;
@@ -59,8 +60,7 @@ public class CameraHolder {
 
             CameraCharacteristics prefs = manager.getCameraCharacteristics(cameraId);
             StreamConfigurationMap map = prefs.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-
-            assert map != null;
+            orientation = prefs.get(CameraCharacteristics.SENSOR_ORIENTATION);
 
             previewSize = getPreviewSize(map.getOutputSizes(SurfaceTexture.class));
             outputSize = getOutputSize(map.getOutputSizes(ImageFormat.JPEG));

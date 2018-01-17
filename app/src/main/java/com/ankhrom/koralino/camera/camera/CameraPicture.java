@@ -62,8 +62,8 @@ public class CameraPicture {
             }
 
             // Orientation
-            int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
+            int rotation = (ORIENTATIONS.get(activity.getWindowManager().getDefaultDisplay().getRotation()) + camera.orientation + 270) % 360;
+            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, rotation);
 
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override

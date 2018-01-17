@@ -1,8 +1,12 @@
 package com.ankhrom.koralino.camera.camera;
 
+import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.view.Surface;
 import android.view.TextureView;
+
+import com.ankhrom.koralino.camera.MainActivity;
 
 /**
  * Created by R' on 1/13/2018.
@@ -25,7 +29,6 @@ public class TextureHolder implements TextureView.SurfaceTextureListener {
 
     private void setUpTransform() {
 
-        /*
         int rotation = MainActivity.ref.getWindowManager().getDefaultDisplay().getRotation();
 
         Matrix matrix = new Matrix();
@@ -47,7 +50,7 @@ public class TextureHolder implements TextureView.SurfaceTextureListener {
             matrix.postRotate(180, centerX, centerY);
         }
 
-        texture.setTransform(matrix);*/
+        texture.setTransform(matrix);
     }
 
     public void setUpPreview() {
