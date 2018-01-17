@@ -31,13 +31,13 @@ public class CameraViewModel extends BaseViewModel<CameraMainBinding, Model> imp
 
     public void onCapturePressed(View view) {
 
+        isLoading.set(true);
+
         new CameraPicture(getBaseActivity()).takePicture(camera, texture, this, false);
     }
 
     @Override
     public void onImageCaptured(ImageReader reader) {
-
-        isLoading.set(true);
 
         addViewModel(PreviewViewModel.class, reader.acquireLatestImage());
         reader.close();

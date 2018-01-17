@@ -7,6 +7,8 @@
         <variable
             name="VM"
             type="com.ankhrom.koralino.camera.viewmodel.PreviewViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <LinearLayout
@@ -23,7 +25,13 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/koralino_logo" />
+
+            <android.support.v7.widget.AppCompatImageView
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:layout_gravity="center_vertical"
@@ -68,26 +76,83 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <FrameLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp">
 
-            <android.support.v7.widget.AppCompatImageButton
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:onClick="@{VM::onSavePressed}"
-                android:src="@drawable/capture_button" />
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1">
 
-            <android.support.v7.widget.AppCompatImageView
-                android:layout_width="wrap_content"
+                <android.support.v7.widget.AppCompatImageButton
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:onClick="@{VM::onAutoAdjustPressed}"
+                    android:src="@drawable/capture_button" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_bubbles"
+                    android:tint="@color/colorAccent" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_done"
-                android:tint="@color/colorAccent" />
+                android:layout_weight="1">
 
-        </FrameLayout>
+                <android.support.v7.widget.AppCompatImageButton
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:onClick="@{VM::onSavePressed}"
+                    android:src="@drawable/capture_button" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_done"
+                    android:tint="@color/colorAccent" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1">
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:onClick="@{VM::onSaveVersionPressed}"
+                    android:src="@drawable/capture_button" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@{VM.version}"
+                    android:textColor="@color/colorAccent" />
+
+            </FrameLayout>
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

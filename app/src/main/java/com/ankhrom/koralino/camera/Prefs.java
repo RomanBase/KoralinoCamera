@@ -13,7 +13,7 @@ public class Prefs {
     private static final String SEPARATOR = "_";
     private static final String SEMI_COLOM = "-";
 
-    public static final String getFilePath() {
+    public static final String getFilePath(int version) {
 
         Calendar calendar = Calendar.getInstance();
 
@@ -33,6 +33,9 @@ public class Prefs {
                 .append(calendar.get(Calendar.MINUTE))
                 .append(SEMI_COLOM)
                 .append(calendar.get(Calendar.SECOND))
+                .append(SEPARATOR)
+                .append("v")
+                .append(version)
                 .append(".png");
 
         return builder.toString();

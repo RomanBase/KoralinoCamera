@@ -6,11 +6,14 @@
         <variable
             name="VM"
             type="com.ankhrom.koralino.camera.viewmodel.CameraViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:background="@color/colorPrimaryDark"
         android:fitsSystemWindows="true">
 
@@ -48,13 +51,28 @@
             </LinearLayout>
 
             <android.support.v7.widget.AppCompatImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="64dp"
                 android:background="@null"
                 android:onClick="@{VM::onCapturePressed}"
                 android:src="@drawable/capture_button" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/overlay_color"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="@{VM.isLoading ? View.VISIBLE : View.GONE}">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
         </FrameLayout>
 
