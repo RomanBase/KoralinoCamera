@@ -43,6 +43,18 @@
                 android:src="@drawable/ic_close"
                 android:tint="@color/colorAccent" />
 
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="@{VM::onGalleryPressed}"
+                android:scaleType="center"
+                android:src="@drawable/ic_photo_library"
+                android:tint="@color/colorAccent" />
+
         </FrameLayout>
 
         <com.ankhrom.base.custom.view.SquareFrameLayout

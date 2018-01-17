@@ -8,6 +8,8 @@ import java.util.Calendar;
 
 public class Prefs {
 
+    public static final String GALERY_APP = "com.google.android.apps.photos";
+
     public static final String FOLDER_NAME = "Koralino";
 
     private static final String SEPARATOR = "_";

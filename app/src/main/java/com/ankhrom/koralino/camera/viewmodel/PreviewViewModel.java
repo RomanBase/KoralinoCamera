@@ -6,6 +6,7 @@ import android.media.ExifInterface;
 import android.media.Image;
 import android.view.View;
 
+import com.ankhrom.base.common.statics.AppsHelper;
 import com.ankhrom.base.common.statics.BitmapHelper;
 import com.ankhrom.base.common.statics.FileHelper;
 import com.ankhrom.base.common.statics.FragmentHelper;
@@ -122,6 +123,16 @@ public class PreviewViewModel extends BaseViewModel<ImagePreviewBinding, Model> 
         version.set(String.valueOf(v + 1));
 
         new ImageFileThread(bitmap, v);
+    }
+
+    public void onGalleryPressed(View view) {
+
+        try {
+            AppsHelper.startApp(getContext(), Prefs.GALERY_APP);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            AppsHelper.showInGooglePlay(getContext(), Prefs.GALERY_APP);
+        }
     }
 
     public void onClosePressed(View view) {
