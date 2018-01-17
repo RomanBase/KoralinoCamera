@@ -70,7 +70,7 @@ public class RawImage {
         return bytes;
     }
 
-    public final class RawColor {
+    public static final class RawColor {
 
         public int r;
         public int g;

@@ -1,21 +1,26 @@
 package com.ankhrom.base.common.statics;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Environment;
 
+import com.ankhrom.base.Base;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Locale;
-
-import com.ankhrom.base.Base;
 
 public final class FileHelper {
 
@@ -121,6 +126,34 @@ public final class FileHelper {
     public static String[] internalFiles(Context context, FilenameFilter filter) {
 
         return context.getFilesDir().list(filter);
+    }
+
+    /**
+     * read file from application assets folder
+     *
+     * @param file path in assets folder
+     * @return file content in byte array
+     */
+    public static byte[] assets(Context context, String file) { //todo check performace
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        try {
+            InputStream is = context.getAssets().open(file, AssetManager.ACCESS_STREAMING);
+            BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(is)));
+
+            int b;
+            while ((b = br.read()) != -1) {
+                bos.write(b);
+            }
+
+            br.close();
+            is.close();
+        } catch (IOException e) {
+            Base.logE("File: " + file + " cannot be read: " + e.getMessage());
+        }
+
+        return bos.toByteArray();
     }
 
     /**
@@ -491,7 +524,7 @@ public final class FileHelper {
                 result = true;
 
             } catch (IOException e) {
-                Base.logE("File downloading fails | " + fileUrl +" | " + uri);
+                Base.logE("File downloading fails | " + fileUrl + " | " + uri);
                 e.printStackTrace();
             } finally {
                 if (!result && fileExist(uri)) {

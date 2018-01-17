@@ -136,6 +136,10 @@ public final class BitmapHelper {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
 
+        if (width == (int) newWidth && height == (int) newHeight) {
+            return bitmap;
+        }
+
         float scaleWidth = newWidth / (float) width;
         float scaleHeight = newHeight / (float) height;
 
@@ -169,7 +173,6 @@ public final class BitmapHelper {
         Matrix matrix = new Matrix();
         matrix.postRotate(rotation);
         matrix.postScale(scaleWidth, scaleHeight);
-
 
         Bitmap out = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, false);
 

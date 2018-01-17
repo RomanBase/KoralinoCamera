@@ -1,5 +1,6 @@
 package com.ankhrom.koralino.camera.image;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.util.Log;
@@ -19,19 +20,22 @@ public class ImageProcessor {
 
     private RawImage rawImage;
     private RawImage tempImage;
+    private RawImage mask;
+    private RawImage.RawColor frameColor;
 
     private float contrast;
     private float brightness;
 
-    public ImageProcessor(Image image) {
+    public ImageProcessor(Context context, Image image) {
 
         Bitmap bitmap = BitmapHelper.loadBitmap(getBytes(image));
 
         rawImage = new RawImage(bitmap);
         tempImage = new RawImage(rawImage);
+        mask = new RawImage(BitmapHelper.resize(BitmapHelper.loadBitmap(context, "image_frame.png"), rawImage.width, rawImage.height));
+        frameColor = new RawImage.RawColor(255, 255, 255);
 
         bitmap.recycle();
-        image.close();
     }
 
     public void setContrast(float contrast) {
@@ -46,40 +50,14 @@ public class ImageProcessor {
 
         long timestamp = System.currentTimeMillis();
 
-        float bound = (float) rawImage.width * 0.125f;
-
         for (int i = 0; i < rawImage.data.length; i++) {
             RawImage.RawColor rawColor = rawImage.data[i];
             RawImage.RawColor tempColor = tempImage.data[i];
-/*
-            int row = i % rawImage.width;
-            int column = i - (row * rawImage.width);
-            float brightnessProgress = 0.0f;
+            RawImage.RawColor maskColor = mask.data[i];
 
-            if (row < bound) {
-                brightnessProgress = 1.0f - (float) row / bound;
-            }
-
-            if (column < bound) {
-                float progress = 1.0f - (float) column / bound;
-                //brightnessProgress = Math.max(brightnessProgress, progress);
-            }
-
-            if (row > rawImage.width - bound) {
-                float progress = bound / (float) (rawImage.width - row);
-                brightnessProgress = Math.max(brightnessProgress, progress);
-            }
-
-            if (column > rawImage.height - bound) {
-                float progress = bound / (float) (rawImage.height - column);
-                //brightnessProgress = Math.max(brightnessProgress, progress);
-            }
-*/
-            int brightnessBump = 0; //(int) (255.0f * brightnessProgress);
-
-            tempColor.r = updateColor(rawColor.r, brightness, contrast) + brightnessBump;
-            tempColor.g = updateColor(rawColor.g, brightness, contrast) + brightnessBump;
-            tempColor.b = updateColor(rawColor.b, brightness, contrast) + brightnessBump;
+            tempColor.r = updateColor(rawColor.r, brightness, contrast, frameColor.r, maskColor.r);
+            tempColor.g = updateColor(rawColor.g, brightness, contrast, frameColor.g, maskColor.g);
+            tempColor.b = updateColor(rawColor.b, brightness, contrast, frameColor.b, maskColor.b);
         }
 
         Log.d("IMAGE", "Image process time: " + String.valueOf(System.currentTimeMillis() - timestamp));
@@ -97,7 +75,7 @@ public class ImageProcessor {
         return getBitmap(rawImage);
     }
 
-    private int updateColor(int color, float brightness, float contrast) {
+    private int updateColor(int color, float brightness, float contrast, float frameColor, float mask) {
 
         brightness *= 255.0f;
         contrast += 1.0f;
@@ -107,7 +85,12 @@ public class ImageProcessor {
         output = (output - 127.5f) * contrast + 127.5f;
         output += brightness;
 
-        return (int) output;
+        return interpolate(output, frameColor, mask / 255.0f);
+    }
+
+    private int interpolate(float a, float b, float t) {
+
+        return (int) (a + (b - a) * t);
     }
 
     private byte[] getBytes(Image image) {

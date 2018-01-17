@@ -38,16 +38,22 @@ public class PreviewViewModel extends BaseViewModel<ImagePreviewBinding, Model> 
     public final ObservableString version = new ObservableString(String.valueOf(0));
 
     private ImageProcessor imageProcessor;
+    private Image image;
 
     @Override
     public void init(InitArgs args) {
         super.init(args);
 
-        imageProcessor = new ImageProcessor(args.getArg(Image.class));
+        image = args.getArg(Image.class);
     }
 
     @Override
     public void onInit() {
+
+        imageProcessor = new ImageProcessor(getContext(), image);
+
+        image.close();
+        image = null;
 
         imageProcessor.setBrightness(brightnessValue);
         imageProcessor.setContrast(contrastValue);
