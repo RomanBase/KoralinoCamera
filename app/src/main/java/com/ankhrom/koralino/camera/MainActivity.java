@@ -8,9 +8,10 @@ import com.ankhrom.base.BaseActivity;
 import com.ankhrom.base.BaseFactory;
 import com.ankhrom.base.interfaces.viewmodel.ViewModelObserver;
 import com.ankhrom.base.viewmodel.BaseViewModelObserver;
+import com.ankhrom.koralino.camera.databinding.ActivityMainBinding;
 import com.ankhrom.koralino.camera.viewmodel.CameraViewModel;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     @Override
     protected boolean onPreInit() {
