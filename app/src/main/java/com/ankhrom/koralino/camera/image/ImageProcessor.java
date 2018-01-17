@@ -15,8 +15,8 @@ import java.nio.ByteBuffer;
 
 public class ImageProcessor {
 
-    private static final float CONTRAST_MAX = 7.5f;
-    private static final float BRIGHTNESS_MAX = 0.675f;
+    private static final float CONTRAST_MAX = 3.5f;
+    private static final float BRIGHTNESS_MAX = 0.50f;
 
     private RawImage rawImage;
     private RawImage tempImage;
