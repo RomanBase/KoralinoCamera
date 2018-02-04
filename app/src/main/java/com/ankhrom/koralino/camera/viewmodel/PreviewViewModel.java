@@ -1,5 +1,6 @@
 package com.ankhrom.koralino.camera.viewmodel;
 
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.graphics.Bitmap;
 import android.media.ExifInterface;
@@ -37,6 +38,7 @@ public class PreviewViewModel extends BaseViewModel<ImagePreviewBinding, Model> 
     public final SeekBarObservable contrast = new SeekBarObservable();
     public final ObservableField<Bitmap> bitmap = new ObservableField<>();
     public final ObservableString version = new ObservableString(String.valueOf(0));
+    public final ObservableBoolean isMaskEnabled = new ObservableBoolean(true);
 
     private ImageProcessor imageProcessor;
     private Image image;
@@ -123,6 +125,15 @@ public class PreviewViewModel extends BaseViewModel<ImagePreviewBinding, Model> 
         version.set(String.valueOf(v + 1));
 
         new ImageFileThread(bitmap, v);
+    }
+
+    public void onFramePressed(View view) {
+
+        isMaskEnabled.set(!isMaskEnabled.get());
+
+        imageProcessor.setMaskOpacity(isMaskEnabled.get() ? 1.0f : 0.0f);
+
+        bitmap.set(imageProcessor.updateImage());
     }
 
     public void onGalleryPressed(View view) {

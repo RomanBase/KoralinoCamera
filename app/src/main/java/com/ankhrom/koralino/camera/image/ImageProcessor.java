@@ -26,6 +26,8 @@ public class ImageProcessor {
     private float contrast;
     private float brightness;
 
+    private float maskOpacity = 1.0f;
+
     public ImageProcessor(Context context, Image image) {
 
         Bitmap bitmap = BitmapHelper.loadBitmap(getBytes(image));
@@ -44,6 +46,10 @@ public class ImageProcessor {
 
     public void setBrightness(float brightness) {
         this.brightness = BRIGHTNESS_MAX * brightness;
+    }
+
+    public void setMaskOpacity(float maskOpacity) {
+        this.maskOpacity = maskOpacity;
     }
 
     public Bitmap updateImage() {
@@ -85,7 +91,7 @@ public class ImageProcessor {
         output = (output - 127.5f) * contrast + 127.5f;
         output += brightness;
 
-        return interpolate(output, frameColor, mask / 255.0f);
+        return interpolate(output, frameColor, (mask * maskOpacity) / 255.0f);
     }
 
     private int interpolate(float a, float b, float t) {

@@ -37,23 +37,41 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/selectable_borderless_background"
                 android:onClick="@{VM::onClosePressed}"
                 android:scaleType="center"
                 android:src="@drawable/ic_close"
                 android:tint="@color/colorAccent" />
 
-            <android.support.v7.widget.AppCompatImageView
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:onClick="@{VM::onGalleryPressed}"
-                android:scaleType="center"
-                android:src="@drawable/ic_photo_library"
-                android:tint="@color/colorAccent" />
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/selectable_borderless_background"
+                    android:onClick="@{VM::onFramePressed}"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_photo_filter"
+                    android:tint="@color/colorAccent" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/selectable_borderless_background"
+                    android:onClick="@{VM::onGalleryPressed}"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_photo_library"
+                    android:tint="@color/colorAccent" />
+
+            </LinearLayout>
 
         </FrameLayout>
 
