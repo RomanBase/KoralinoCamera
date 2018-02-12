@@ -71,7 +71,6 @@ public final class BitmapHelper {
         return BitmapFactory.decodeStream(new ByteArrayInputStream(bytes), null, options); //close ByteArrayInputStream is not required
     }
 
-
     /**
      * @param bitmap Bitmap to compress
      * @return byte[] array of bitmap's data

@@ -3,8 +3,8 @@ package com.ankhrom.koralino.camera.image;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.Image;
-import android.util.Log;
 
+import com.ankhrom.base.Base;
 import com.ankhrom.base.common.statics.BitmapHelper;
 
 import java.nio.ByteBuffer;
@@ -20,7 +20,7 @@ public class ImageProcessor {
 
     private RawImage rawImage;
     private RawImage tempImage;
-    private RawImage mask;
+    private static RawImage mask;
     private RawImage.RawColor frameColor;
 
     private float contrast;
@@ -30,14 +30,24 @@ public class ImageProcessor {
 
     public ImageProcessor(Context context, Image image) {
 
-        Bitmap bitmap = BitmapHelper.loadBitmap(getBytes(image));
+        byte[] bytes = getBytes(image);
+        image.close();
+
+        Bitmap bitmap = BitmapHelper.loadBitmap(bytes);
 
         rawImage = new RawImage(bitmap);
+        rawImage = new RawImage(bitmap = BitmapHelper.resize(getOriginBitmap(), 512, 512));
+
         tempImage = new RawImage(rawImage);
-        mask = new RawImage(BitmapHelper.resize(BitmapHelper.loadBitmap(context, "image_frame.png"), rawImage.width, rawImage.height));
         frameColor = new RawImage.RawColor(255, 255, 255);
 
         bitmap.recycle();
+
+        if (mask == null) {
+            Bitmap frame = BitmapHelper.resize(BitmapHelper.loadBitmap(context, "image_frame.png"), rawImage.width, rawImage.height);
+            mask = new RawImage(frame);
+            frame.recycle();
+        }
     }
 
     public void setContrast(float contrast) {
@@ -66,7 +76,7 @@ public class ImageProcessor {
             tempColor.b = updateColor(rawColor.b, brightness, contrast, frameColor.b, maskColor.b);
         }
 
-        Log.d("IMAGE", "Image process time: " + String.valueOf(System.currentTimeMillis() - timestamp));
+        Base.logE("IMAGE", "Image process time: " + String.valueOf(System.currentTimeMillis() - timestamp));
 
         return getProcessedBitmap();
     }

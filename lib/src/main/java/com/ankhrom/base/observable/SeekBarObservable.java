@@ -17,6 +17,7 @@ public class SeekBarObservable extends BaseObservableField<SeekBar, Integer> {
     private OnValueChangedListener<Integer> onPostValueChangedListener;
 
     public SeekBarObservable() {
+        super(0);
     }
 
     public SeekBarObservable(Integer value) {
@@ -47,6 +48,10 @@ public class SeekBarObservable extends BaseObservableField<SeekBar, Integer> {
 
     @Override
     protected void onBindingCreated(SeekBar view) {
+
+        if (view == null) {
+            return;
+        }
 
         view.setProgress(get());
         view.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -80,7 +85,7 @@ public class SeekBarObservable extends BaseObservableField<SeekBar, Integer> {
     }
 
     @BindingAdapter({"app:progress"})
-    public static void bindEditText(SeekBar view, final SeekBarObservable observable) {
+    public static void bindView(SeekBar view, final SeekBarObservable observable) {
 
         if (observable == null) {
             return;

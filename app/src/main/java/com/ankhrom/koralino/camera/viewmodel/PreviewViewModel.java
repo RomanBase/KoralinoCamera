@@ -5,6 +5,7 @@ import android.databinding.ObservableField;
 import android.graphics.Bitmap;
 import android.media.ExifInterface;
 import android.media.Image;
+import android.media.ImageReader;
 import android.view.View;
 
 import com.ankhrom.base.common.statics.AppsHelper;
@@ -41,33 +42,37 @@ public class PreviewViewModel extends BaseViewModel<ImagePreviewBinding, Model> 
     public final ObservableBoolean isMaskEnabled = new ObservableBoolean(true);
 
     private ImageProcessor imageProcessor;
-    private Image image;
+    private ImageReader reader;
 
     @Override
     public void init(InitArgs args) {
         super.init(args);
 
-        image = args.getArg(Image.class);
+        reader = args.getArg(ImageReader.class);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+
+        if (isLoading.get()) {
+            return true;
+        }
+
+        close();
+
+        return true;
     }
 
     @Override
     public void onInit() {
 
-        imageProcessor = new ImageProcessor(getContext(), image);
+        if (imageProcessor != null) {
+            return;
+        }
 
-        image.close();
-        image = null;
-
-        imageProcessor.setBrightness(brightnessValue);
-        imageProcessor.setContrast(contrastValue);
-
-        brightness.setPercentage(brightnessValue);
-        contrast.setPercentage(contrastValue);
-
-        brightness.setOnPostValueChangedListener(onBrightnessChangedListener);
-        contrast.setOnPostValueChangedListener(onContrastChangedListener);
-
-        bitmap.set(imageProcessor.updateImage());
+        isLoading.set(true);
+        init();
+        isLoading.set(false);
     }
 
     private final OnValueChangedListener<Integer> onBrightnessChangedListener = new OnValueChangedListener<Integer>() {
@@ -87,6 +92,27 @@ public class PreviewViewModel extends BaseViewModel<ImagePreviewBinding, Model> 
             bitmap.set(imageProcessor.updateImage());
         }
     };
+
+    private void init() {
+
+        Image image = reader.acquireLatestImage();
+        imageProcessor = new ImageProcessor(getContext(), image);
+
+        reader.close();
+        image.close();
+        reader = null;
+
+        imageProcessor.setBrightness(brightnessValue);
+        imageProcessor.setContrast(contrastValue);
+
+        brightness.setPercentage(brightnessValue);
+        contrast.setPercentage(contrastValue);
+
+        brightness.setOnPostValueChangedListener(onBrightnessChangedListener);
+        contrast.setOnPostValueChangedListener(onContrastChangedListener);
+
+        bitmap.set(imageProcessor.updateImage());
+    }
 
     public void onSavePressed(View view) {
 
@@ -158,7 +184,12 @@ public class PreviewViewModel extends BaseViewModel<ImagePreviewBinding, Model> 
             imageProcessor = null;
         }
 
+        Bitmap activeBitmap = bitmap.get();
         bitmap.set(null);
+
+        if (activeBitmap != null && !activeBitmap.isRecycled()) {
+            activeBitmap.recycle();
+        }
 
         getNavigation().setPreviousViewModel();
         FragmentHelper.removePage(getContext(), this);

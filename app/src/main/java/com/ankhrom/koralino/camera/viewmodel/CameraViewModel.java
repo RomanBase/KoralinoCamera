@@ -39,8 +39,7 @@ public class CameraViewModel extends BaseViewModel<CameraMainBinding, Model> imp
     @Override
     public void onImageCaptured(ImageReader reader) {
 
-        addViewModel(PreviewViewModel.class, reader.acquireLatestImage());
-        reader.close();
+        addViewModel(PreviewViewModel.class, reader);
 
         isLoading.set(false);
     }
